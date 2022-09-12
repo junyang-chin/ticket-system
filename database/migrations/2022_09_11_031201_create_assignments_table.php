@@ -15,8 +15,8 @@ class CreateAssignmentsTable extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->foreign('tracking_id')->references('id')->on('trackings');
-            $table->foreign('dev_id')->references('id')->on('users');
+            $table->foreignId('tracking_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
