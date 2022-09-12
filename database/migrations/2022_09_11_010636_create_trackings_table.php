@@ -17,8 +17,8 @@ class CreateTrackingsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->enum('priority', ['high', 'mid', 'low']);
-            $table->enum('status', ['in_progress', 'backlog', 'complete']);
+            $table->string('priority');
+            $table->string('status');
             $table->string('pr_id')->nullable();
             $table->timestamps();
         });

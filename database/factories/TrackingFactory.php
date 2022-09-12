@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Enums\TicketStatus;
+use App\Enums\TrackingPriority;
+use App\Enums\TrackingStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TicketFactory extends Factory
+class TrackingFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,13 +17,12 @@ class TicketFactory extends Factory
     {
         return [
             //
-            'user_id' => rand(3,22),
-            'category_id' => rand(1,3),
             'title' => $this->faker->sentence(),
-            'description'=> $this->faker->paragraph(3, true),
-            'status' => TicketStatus::random(),
+            'description' => $this->faker->paragraph(3, true),
+            'priority' => TrackingPriority::random(),
+            'status' => TrackingStatus::random(),
             'comment' => $this->faker->sentence(10),
-            'tracking_id' => rand(1,50),
+            'pr_id' => $this->faker->rand(1,150),
         ];
     }
 }
