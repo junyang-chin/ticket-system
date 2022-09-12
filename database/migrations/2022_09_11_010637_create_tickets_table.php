@@ -15,12 +15,14 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->string('category_code');
+            $table->foreign('category_code')->references('code')->on('categories');
             $table->string('title');
             $table->string('description');
-            $table->string('status');
+            $table->enum('status', ['pending', 'opened', 'closed']);
             $table->string('comment')->nullable();
-            $table->foreignId('tracking_id')->constrained();
+            $table->foreignId('tracking_id')->constrained()->nullable();
             $table->timestamps();
         });
     }

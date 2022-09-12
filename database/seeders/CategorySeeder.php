@@ -15,11 +15,15 @@ class CategorySeeder extends Seeder
     public function run()
     {
         //
-        Category::insert([
-           ['name' => 'adnexio'],
-           ['name' => 'meniaga'],
-           ['name' => 'decoris'],
-        ]);
-        
+        $categories = [
+            ['code' => 'adx', 'name' => 'adnexio'],
+            ['code' => 'mng', 'name' => 'meniaga'],
+            ['code' => 'dcr', 'name' => 'decoris'],
+        ];
+
+        foreach ($categories as $category) {
+            extract($category);
+            Category::create(['code' => $code, 'name' => $name]);
+        }
     }
 }

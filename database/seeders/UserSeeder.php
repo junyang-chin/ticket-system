@@ -15,16 +15,23 @@ class UserSeeder extends Seeder
     public function run()
     {
         //
-        User::insert(
+        User::create(
             [
-                [
-                    'name'=>'admin',
-                    'password'=>'admin',
-                    'email'=>'admin@admin',
-                    'level'=>'admin',
-                ],
+                'name' => 'admin',
+                'password' => 'admin',
+                'email' => 'admin@email',
+                'role' => 'admin',
             ]
         );
-        User::factory(100)->create();
+
+        User::create(
+            [
+                'name' => 'developer',
+                'password' => 'dev',
+                'email' => 'dev@email',
+                'role' => 'developer',
+            ]
+        );
+        User::factory(20)->create();
     }
 }

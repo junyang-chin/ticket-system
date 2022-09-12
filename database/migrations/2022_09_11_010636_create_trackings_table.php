@@ -15,11 +15,11 @@ class CreateTrackingsTable extends Migration
     {
         Schema::create('trackings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id');
             $table->string('title');
             $table->string('description');
-            $table->string('priority');
-            $table->string('status');
+            $table->enum('priority', ['high', 'mid', 'low']);
+            $table->enum('status', ['in_progress', 'backlog', 'complete']);
+            $table->string('pr_id')->nullable();
             $table->timestamps();
         });
     }

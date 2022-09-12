@@ -10,7 +10,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    // use transaciton
+    // use db transactions to prevent inserting test data to db during testing
     use DatabaseTransactions;
 
     public function getUserData()
