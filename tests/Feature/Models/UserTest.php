@@ -64,7 +64,7 @@ class UserTest extends TestCase
      */
     public function test_delete_user()
     {
-        $response = $this->deleteJson('/api/user/3');
+        $response = $this->deleteJson('/api/user/5');
         $response->assertStatus(200);
     }
 }

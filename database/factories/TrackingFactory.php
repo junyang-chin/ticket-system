@@ -15,14 +15,14 @@ class TrackingFactory extends Factory
      */
     public function definition()
     {
+        // dd(TrackingPriority::random());
         return [
             //
-            'title' => $this->faker->sentence(),
-            'description' => $this->faker->paragraph(3, true),
+            'title' => $this->faker->sentence(4),
+            'description' => $this->faker->paragraph(1),
             'priority' => TrackingPriority::random(),
             'status' => TrackingStatus::random(),
-            'comment' => $this->faker->sentence(10),
-            'pr_id' => $this->faker->rand(1,150),
+            'pr_id' => rand(1, 150),
         ];
     }
 }

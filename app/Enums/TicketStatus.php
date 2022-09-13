@@ -15,9 +15,11 @@ final class TicketStatus extends Enum
     private const OPEN = 'open';
     private const CLOSED = 'closed';
 
+    /**
+     * return a random constant
+     */
     public static function random(){
         $statuses = self::toArray();
-
         return $statuses[array_rand($statuses)];
     }
 }

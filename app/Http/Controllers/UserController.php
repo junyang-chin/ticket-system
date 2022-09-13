@@ -89,6 +89,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        // dd(User::findorFail($id));
         User::findorFail($id)->delete();
         return User::all();
     }

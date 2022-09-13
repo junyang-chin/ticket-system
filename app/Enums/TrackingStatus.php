@@ -15,10 +15,14 @@ final class TrackingStatus extends Enum
     private const BACKLOG = 'backlog';
     private const COMPLETED = 'completed';
 
+
+
+    /**
+     * return a random constant
+     */
     public static function random()
     {
         $statuses = self::toArray();
-
         return $statuses[array_rand($statuses)];
     }
 }

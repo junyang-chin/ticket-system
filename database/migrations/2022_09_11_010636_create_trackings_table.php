@@ -16,7 +16,7 @@ class CreateTrackingsTable extends Migration
         Schema::create('trackings', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->text('description', 'max');
             $table->string('priority');
             $table->string('status');
             $table->string('pr_id')->nullable();

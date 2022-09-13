@@ -15,10 +15,12 @@ final class TrackingPriority extends Enum
     private const MID = 'mid';
     private const LOW = 'low';
 
+    /**
+     * return a random constant
+     */
     public static function random()
     {
         $statuses = self::toArray();
-
         return $statuses[array_rand($statuses)];
     }
 }

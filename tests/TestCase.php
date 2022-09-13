@@ -9,7 +9,6 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-
     // use db transactions to prevent inserting test data to db during testing
     use DatabaseTransactions;
 

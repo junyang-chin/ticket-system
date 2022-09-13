@@ -18,8 +18,8 @@ class TicketFactory extends Factory
             //
             'user_id' => rand(3,22),
             'category_id' => rand(1,3),
-            'title' => $this->faker->sentence(),
-            'description'=> $this->faker->paragraph(3, true),
+            'title' => $this->faker->sentence(4),
+            'description'=> $this->faker->paragraph(1),
             'status' => TicketStatus::random(),
             'comment' => $this->faker->sentence(10),
             'tracking_id' => rand(1,50),
