@@ -5,12 +5,25 @@ namespace Tests\Feature\Models;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
 
-
+    /**
+     * set up an authenticated user
+     */
+    public function setUp():void
+    {
+        // must call parent method first
+        parent::setUp();
+        
+        // create fake user
+        $fakeUser = User::factory()->create();
+        // authenticate user
+        Sanctum::actingAs($fakeUser);
+    }
     /**
      * Test get user list
      */

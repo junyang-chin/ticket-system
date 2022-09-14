@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,4 +24,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 /**
  * User Route
  */
-Route::apiResource('user', UserController::class);
+Route::apiResource('user', UserController::class)
+->middleware(['auth:sanctum'])//TODO: add split route for different spatie permissions;
+
+
+/**
+ * User login logout
+ */
+Route::post('/login-user', [AuthController::class, 'login']);
+Route::post('/logout-user', [AuthController::class, 'logout'])->middleware('auth:sanctum');

@@ -32,6 +32,9 @@ class UserSeeder extends Seeder
                 'role' => 'developer',
             ]
         );
-        User::factory(20)->create();
+        
+        foreach(User::factory(20)->create() as $user){
+            $user->assignRole('user');
+        }
     }
 }

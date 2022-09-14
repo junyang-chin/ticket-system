@@ -39,6 +39,7 @@ class UserController extends Controller
     {
         //
         $user = User::create($request->all());
+        $user->assignRole('user');
         return $user;
     }
 

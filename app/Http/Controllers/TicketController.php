@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,7 @@ class TicketController extends Controller
     public function index()
     {
         //
+        return TicketResource::collection(Ticket::all());
     }
 
     /**
@@ -36,18 +38,22 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         //
+        $data = Ticket::create($request->all());
+        return TicketResource::make($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Ticket  $ticket
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Ticket $ticket)
+    public function show($id)
     {
         //
+        return new TicketResource(Ticket::findorFail($id));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -64,22 +70,27 @@ class TicketController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ticket  $ticket
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(Request $request, $id)
     {
-        //
+        $ticket = Ticket::findorFail($id);
+        $ticket->update($request->all());
+        return new TicketResource($ticket);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ticket  $ticket
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ticket $ticket)
+    public function destroy($id)
     {
         //
+        $ticket = Ticket::findorFail($id);
+        $ticket->delete();
+        return response()->json(null,204);
     }
 }
