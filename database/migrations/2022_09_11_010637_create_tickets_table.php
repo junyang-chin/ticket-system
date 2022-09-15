@@ -21,7 +21,6 @@ class CreateTicketsTable extends Migration
             $table->text('description');
             $table->string('status');
             $table->text('comment')->nullable();
-            $table->foreignId('tracking_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
         });
     }

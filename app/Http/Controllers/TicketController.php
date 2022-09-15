@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
+    public function __construct()
+    {
+        // TODO policy 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +39,7 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) //TODO validate req
     {
         //
         $data = Ticket::create($request->all());
@@ -73,8 +77,9 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id)//TODO validate request
     {
+        
         $ticket = Ticket::findorFail($id);
         $ticket->update($request->all());
         return new TicketResource($ticket);
@@ -83,13 +88,13 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  \App\Models\Ticket $ticket
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
         //
-        $ticket = Ticket::findorFail($id);
+        $ticket = Ticket::findorFail($ticket->id);
         $ticket->delete();
         return response()->json(null,204);
     }
