@@ -57,9 +57,9 @@ class UserTest extends TestCase
         $reponse
             ->assertStatus(200)
             //->assertOk() same as assertStatus(200)
-            ->assertJson(
-                ['name' => $this->fakeUser->name]
-            );
+            ->assertJson([
+               'data'=> ['name' => $this->fakeUser->name]
+            ]);
 
         // $this->assertDatabaseHas(User::class, ['name' => 'admin']);
     }
@@ -92,7 +92,7 @@ class UserTest extends TestCase
     /**
      * Test update user by id
      */
-    public function test_update_user()
+    public function test_user_update_itself()
     {
         $this->fakeUser->name = 'change name';
 
@@ -100,6 +100,29 @@ class UserTest extends TestCase
         $response->assertStatus(200);
 
         $this->assertDatabaseHas(User::class, ['id'=> $this->fakeUser->id, 'name' => $this->fakeUser->name]);
+    }
+    /**
+     * Test update user by id
+     */
+    public function test_user_cannot_update_others()
+    {
+        $this->fakeUser->name = 'change name';
+
+        $response = $this->putJson('api/user/'. '1' , $this->fakeUser->toArray());
+        $response->assertStatus(403);
+
+    }
+    /**
+     * Test update user by id
+     */
+    public function test_admin_can_update_others()
+    {
+        $this->fakeUser->assignRole('admin');
+       
+
+        $response = $this->putJson('api/user/'. '1', ['name'=> 'change name']);
+        $response->assertStatus(200);
+
     }
 
     /**

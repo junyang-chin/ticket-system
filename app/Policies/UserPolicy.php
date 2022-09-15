@@ -62,6 +62,15 @@ class UserPolicy
     {
         //
         // dd($user->hasPermissionTo('user_update'));
+
+        // user can update themself only
+        if ($user->id !== $model->id) {
+            // admin can overwrite
+            if ($user->hasRole('admin')) {
+                return true;
+            }
+            return false;
+        }
         return $user->hasPermissionTo('user_update');
     }
 

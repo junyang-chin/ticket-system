@@ -9,17 +9,7 @@ use Tests\TestCase;
 
 class TicketTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
-    }
 
     /**
      * test index() api should get list of all tickets

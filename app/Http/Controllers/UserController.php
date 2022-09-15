@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        return User::all();
+        return UserResource::collection(User::all());
     }
 
     /**
@@ -45,7 +46,7 @@ class UserController extends Controller
         //
         $user = User::create($request->all());
         $user->assignRole('user');
-        return $user;
+        return new UserResource($user);
     }
 
     /**
@@ -57,7 +58,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
-        return User::findorFail($user->id);
+        return new UserResource(User::findorFail($user->id));
     }
 
     /**
@@ -83,7 +84,7 @@ class UserController extends Controller
         //
         $user = User::findorFail($user->id);
         $user->update($request->all());
-        return $user;
+        return new UserResource($user);
     }
 
     /**
