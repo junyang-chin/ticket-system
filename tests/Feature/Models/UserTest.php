@@ -44,7 +44,6 @@ class UserTest extends TestCase
      */
     public function test_user_cannot_get_user_list()
     {
-
         $response = $this->getJson('api/user');
         $response->assertStatus(403);
     }
@@ -52,15 +51,27 @@ class UserTest extends TestCase
     /**
      * Test get user by id
      */
-    public function test_get_user()
+    public function test_user_view_itself()
     {
-        $reponse = $this->getJson('api/user/1' );
+        $reponse = $this->getJson('api/user/' . $this->fakeUser->id );
         $reponse
             ->assertStatus(200)
             //->assertOk() same as assertStatus(200)
             ->assertJson(
-                ['name' => 'admin']
+                ['name' => $this->fakeUser->name]
             );
+
+        // $this->assertDatabaseHas(User::class, ['name' => 'admin']);
+    }
+    /**
+     * Test get user by id
+     */
+    public function test_user_cannot_view_other()
+    {
+        $reponse = $this->getJson('api/user/1');
+        $reponse
+            ->assertStatus(403);
+           
 
         // $this->assertDatabaseHas(User::class, ['name' => 'admin']);
     }

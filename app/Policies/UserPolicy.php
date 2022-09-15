@@ -35,7 +35,7 @@ class UserPolicy
     {
         //
         // dd($user->hasPermissionTo('user_show'));
-        return $user->hasPermissionTo('user_show');
+        return ($user->hasPermissionTo('user_show')) && ($user->id === $model->id);
     }
 
     /**

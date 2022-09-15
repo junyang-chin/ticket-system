@@ -37,11 +37,9 @@ class PermissionRoleSeeder extends Seeder
         $user = Role::create(['name' => 'user']);
         $user->givePermissionTo(
             [
-                'user_index',
                 'user_show',
                 'user_store',
                 'user_update',
-                'user_destroy',
             ]
         );
 
