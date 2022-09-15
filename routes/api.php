@@ -25,7 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  * User Route
  */
 Route::apiResource('user', UserController::class)
-->middleware(['auth:sanctum'])//TODO: add split route for different spatie permissions;
+    ->names('user')
+    ->middleware(['auth:sanctum']);
 
 
 /**

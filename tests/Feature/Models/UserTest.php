@@ -14,23 +14,39 @@ class UserTest extends TestCase
     /**
      * set up an authenticated user
      */
-    public function setUp():void
+    public function setUp(): void
     {
         // must call parent method first
         parent::setUp();
+
+        // create fake user as property
+        $this->fakeUser = User::factory()->create();
+        $this->fakeUser->assignRole('user');
+        // $admin = User::findorFail(1);
+        // $admin->assignRole('admin');
+    
         
-        // create fake user
-        $fakeUser = User::factory()->create();
         // authenticate user
-        Sanctum::actingAs($fakeUser);
+        Sanctum::actingAs($this->fakeUser);
     }
     /**
      * Test get user list
      */
-    public function test_get_user_list()
+    public function test_admin_can_get_user_list() 
     {
-        $response = $this->getJson('/api/user');
+        $this->fakeUser->assignRole('admin');
+        
+        $response = $this->getJson('api/user');
         $response->assertStatus(200);
+    }
+    /**
+     * Test get user list
+     */
+    public function test_user_cannot_get_user_list()
+    {
+
+        $response = $this->getJson('api/user');
+        $response->assertStatus(403);
     }
 
     /**
@@ -38,7 +54,7 @@ class UserTest extends TestCase
      */
     public function test_get_user()
     {
-        $reponse = $this->getJson('/api/user/1');
+        $reponse = $this->getJson('api/user/1' );
         $reponse
             ->assertStatus(200)
             //->assertOk() same as assertStatus(200)
@@ -56,7 +72,7 @@ class UserTest extends TestCase
     {
         $user = $this->getUserData();
         // dd($user);
-        $response = $this->postJson('/api/user', $user);
+        $response = $this->postJson('api/user', $user);
         // dd($response->content());
         $response->assertStatus(201); //or assertCreated()
         // $this->assertDatabaseHas(User::class, ['name' => 'admin']);
@@ -68,16 +84,26 @@ class UserTest extends TestCase
     public function test_update_user()
     {
 
-        $response = $this->putJson('/api/user/2', ['name' => 'developer 1']);
+        $response = $this->putJson('api/user/2', ['name' => 'developer 1']);
         $response->assertStatus(200);
     }
 
     /**
      * Test delete user by id
      */
-    public function test_delete_user()
+    public function test_admin_can_delete_user()
     {
-        $response = $this->deleteJson('/api/user/5');
+        $this->fakeUser->assignRole('admin');
+        $response = $this->deleteJson('api/user/5');
         $response->assertStatus(200);
+    }
+    /**
+     * Test delete user by id
+     */
+    public function test_user_cannot_delete_user()
+    {
+        $this->fakeUser->assignRole('user');
+        $response = $this->deleteJson('api/user/5');
+        $response->assertStatus(403);
     }
 }

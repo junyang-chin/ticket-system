@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         //
-        User::create(
+        $admin = User::create(
             [
                 'name' => 'admin',
                 'password' => 'admin',
@@ -23,8 +23,10 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
             ]
         );
+        $admin->assignRole('admin');
 
-        User::create(
+
+        $developer = User::create(
             [
                 'name' => 'developer',
                 'password' => 'dev',
@@ -32,8 +34,9 @@ class UserSeeder extends Seeder
                 'role' => 'developer',
             ]
         );
-        
-        foreach(User::factory(20)->create() as $user){
+        $developer->assignRole('user');
+
+        foreach (User::factory(20)->create() as $user) {
             $user->assignRole('user');
         }
     }

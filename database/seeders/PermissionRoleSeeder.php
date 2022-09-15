@@ -20,7 +20,7 @@ class PermissionRoleSeeder extends Seeder
         Permission::create(['name' => 'user_show']);
         Permission::create(['name' => 'user_store']);
         Permission::create(['name' => 'user_update']);
-        Permission::create(['name' => 'user_delete']);
+        Permission::create(['name' => 'user_destroy']);
 
         $admin = Role::create(['name' => 'admin']);
         $admin->givePermissionTo(
@@ -29,7 +29,7 @@ class PermissionRoleSeeder extends Seeder
                 'user_show',
                 'user_store',
                 'user_update',
-                'user_delete',
+                'user_destroy',
             ]
         );
 
@@ -37,9 +37,11 @@ class PermissionRoleSeeder extends Seeder
         $user = Role::create(['name' => 'user']);
         $user->givePermissionTo(
             [
+                'user_index',
                 'user_show',
                 'user_store',
                 'user_update',
+                'user_destroy',
             ]
         );
 
