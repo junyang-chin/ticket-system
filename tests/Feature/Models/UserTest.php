@@ -94,9 +94,12 @@ class UserTest extends TestCase
      */
     public function test_update_user()
     {
+        $this->fakeUser->name = 'change name';
 
-        $response = $this->putJson('api/user/2', ['name' => 'developer 1']);
+        $response = $this->putJson('api/user/'. $this->fakeUser->id, $this->fakeUser->toArray());
         $response->assertStatus(200);
+
+        $this->assertDatabaseHas(User::class, ['id'=> $this->fakeUser->id, 'name' => $this->fakeUser->name]);
     }
 
     /**
@@ -105,7 +108,7 @@ class UserTest extends TestCase
     public function test_admin_can_delete_user()
     {
         $this->fakeUser->assignRole('admin');
-        $response = $this->deleteJson('api/user/5');
+        $response = $this->deleteJson('api/user/'. $this->fakeUser->id);
         $response->assertStatus(200);
     }
     /**
@@ -114,7 +117,7 @@ class UserTest extends TestCase
     public function test_user_cannot_delete_user()
     {
         $this->fakeUser->assignRole('user');
-        $response = $this->deleteJson('api/user/5');
+        $response = $this->deleteJson('api/user/' . $this->fakeUser->id);
         $response->assertStatus(403);
     }
 }
