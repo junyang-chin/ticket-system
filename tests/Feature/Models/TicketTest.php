@@ -16,7 +16,7 @@ class TicketTest extends TestCase
 {
 
 
-    public function setUP(): void
+    public function setUp(): void
     {
         $this->user = User::factory()->create();
         $this->user->assignRole('user');

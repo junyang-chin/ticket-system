@@ -11,6 +11,7 @@ class TicketController extends Controller
     public function __construct()
     {
         // TODO policy 
+        $this->authorizeResource(Ticket::class, 'ticket');
     }
     /**
      * Display a listing of the resource.

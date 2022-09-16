@@ -19,6 +19,7 @@ class CreateTrackingsTable extends Migration
             $table->text('description', 'max');
             $table->string('priority');
             $table->string('status');
+            $table->foreignId('category_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->string('pr_id')->nullable();
             $table->timestamps();
         });
