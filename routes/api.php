@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,11 +23,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 /**
- * User Route
+ * Resource api
  */
-Route::apiResource('user', UserController::class)
-    ->names('user')
-    ->middleware(['auth:sanctum']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('user', UserController::class);
+    Route::apiResource('ticket', TicketController::class);
+});
+// Route::apiResource('user', UserController::class)
+//     ->names('user')
+//     ->middleware(['auth:sanctum']);
 
 
 /**

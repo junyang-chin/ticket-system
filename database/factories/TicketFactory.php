@@ -18,8 +18,8 @@ class TicketFactory extends Factory
             //
             'category_id' => rand(1,3),
             'title' => 'title here',
-            'description'=> 'some descripotion',
-            'status' => TicketStatus::pending(),
+            'description'=> 'some description',
+            'status' => TicketStatus::PENDING(),
             'comment' => null,
         ];
     }

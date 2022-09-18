@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
     public function __construct()
     {
-        // TODO policy 
-        $this->authorizeResource(Ticket::class, 'ticket');
+        $this->authorizeResource(TicketController::class, 'ticket');
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class TicketController extends Controller
     public function index()
     {
         //
-        return TicketResource::collection(Ticket::all());
+        return TicketResource::collection(Auth::user()->tickets);
     }
 
     /**
@@ -40,25 +40,23 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) //TODO validate req
+    public function store(Request $request) //TODO validate request
     {
         //
-        $data = Ticket::create($request->all());
-        return TicketResource::make($data);
+        return TicketResource::make(Auth::user()->tickets()->create($request->all()));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ticket $ticket)
     {
         //
-        return new TicketResource(Ticket::findorFail($id));
+        return new TicketResource(Ticket::findorFail($ticket->id));
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -75,28 +73,29 @@ class TicketController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)//TODO validate request
+    public function update(Request $request, Ticket $ticket) //TODO validate reqeust
     {
-        
-        $ticket = Ticket::findorFail($id);
+        //
+        $ticket = Ticket::findorFail($ticket->id);
         $ticket->update($request->all());
         return new TicketResource($ticket);
+        abort(403);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ticket $ticket
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
     public function destroy(Ticket $ticket)
     {
         //
-        $ticket = Ticket::findorFail($ticket->id);
         $ticket->delete();
-        return response()->json(null,204);
+        return response(null, 204);
+        abort(403);
     }
 }

@@ -60,7 +60,7 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($pwd);
     }
 
-    public function ticket()
+    public function tickets()
     {
         return  $this->hasMany(Ticket::class);
     }

@@ -18,7 +18,7 @@ class UserTest extends TestCase
     {
         // must call parent method first
         parent::setUp();
-
+        
         // create fake user as property
         $this->fakeUser = User::factory()->create();
         $this->fakeUser->assignRole('user');

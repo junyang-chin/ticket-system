@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -18,12 +19,17 @@ class TicketTest extends TestCase
 
     public function setUp(): void
     {
+
+        // must call parent method first always
+        parent::setUp();
+
         $this->user = User::factory()->create();
         $this->user->assignRole('user');
         $this->userB = User::factory()->create();
         $this->userB->assignRole('user');
         Sanctum::actingAs($this->user);
     }
+
 
     public function test_can_view_their_own_tickets()
     {
@@ -32,8 +38,9 @@ class TicketTest extends TestCase
         $ticketC = Ticket::factory()->for($this->userB)->create();
 
         $this->getJson('api/ticket')
-        ->assertJson(2, 'data');
+            ->assertJsonCount(2, 'data');
     }
+
     public function test_can_view_one_of_their_own_tickets()
     {
         $ticketA = Ticket::factory()->for($this->user)->create();
@@ -41,42 +48,53 @@ class TicketTest extends TestCase
         $ticketC = Ticket::factory()->for($this->userB)->create();
 
         $this->getJson('api/ticket/' . $ticketA->id)
-        ->assertJson(1, 'data');
+            ->assertJsonCount(1)
+            ->assertJson([
+                'data' => [
+                    'category' => $ticketA->category->name,
+                ]
+            ]);
     }
     public function test_can_create_ticket()
     {
         $ticketA = Ticket::factory()->make();
-        $this->postJson('api/ticket/' . $ticketA->id, $ticketA->toArray())
-        ->assertStatus(204);
+
+        $this->postJson('api/ticket', $ticketA->toArray())
+            ->assertStatus(201);
     }
 
     public function test_can_update_ticket()
     {
         $ticket = Ticket::factory()->for($this->user)->create();
-        
-        $this->putJson('api/ticket/'. $ticket->id,['category_id'=> 2])
-        ->assertStatus(200);
+
+        $this->putJson('api/ticket/' . $ticket->id, ['category_id' => 2])
+            ->assertStatus(200);
     }
     public function test_cannot_update_other_ticket()
     {
         $ticket = Ticket::factory()->for($this->userB)->create();
-        
-        $this->putJson('api/ticket/'. $ticket->id,['category_id'=> 2])
-        ->assertStatus(403);
+
+        $this->putJson('api/ticket/' . $ticket->id, ['category_id' => 2])
+            ->assertStatus(403);
     }
-    
+
     public function test_can_delete_own_ticket()
     {
         $ticket = Ticket::factory()->for($this->user)->create();
-        $this->deleteJson('api/ticket', $ticket->id)
-        ->assertStatus(200);
-        
+        $this->deleteJson('api/ticket/' . $ticket->id)
+            ->assertStatus(204);
+
+        // make sure class is deleted from db
+        $this->assertDatabaseMissing(Ticket::class, $ticket->toArray());
     }
     public function test_cannot_delete_others_ticket()
     {
-        $ticket = Ticket::factory()->for($this->userB)->create();
-        $this->deleteJson('api/ticket', $ticket->id)
+        $ticketA = Ticket::factory()->for($this->user)->create();
+        $ticketB = Ticket::factory()->for($this->userB)->create();
+        $this->deleteJson('api/ticket/' . $ticketB->id)
         ->assertStatus(403);
 
+        // make sure class is not deleted from db
+        $this->assertDatabaseHas(Ticket::class, ['id'=>$ticketB->id]);
     }
 }

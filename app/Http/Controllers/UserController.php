@@ -11,6 +11,7 @@ class UserController extends Controller
 
     public function __construct()
     {
+        //spatie
         $this->authorizeResource(User::class, 'user');
     }
 
