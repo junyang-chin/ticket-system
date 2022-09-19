@@ -9,4 +9,13 @@ class TicketStatus extends Model
 {
     use HasFactory;
     protected $fillable = ['status'];
+
+    /**
+     * One to one relationship (inverse)
+     */
+    public function tickets()
+    {
+        $this->belongsTo(Ticket::class);
+    }
 }
+
