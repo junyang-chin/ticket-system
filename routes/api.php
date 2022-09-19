@@ -26,12 +26,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  * Resource api
  */
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::apiResource('user', UserController::class);
-    Route::apiResource('ticket', TicketController::class);
+    // user
+    Route::apiResource('/user', UserController::class);
+    // ticket
+    Route::apiResource('/ticket', TicketController::class);
 });
-// Route::apiResource('user', UserController::class)
-//     ->names('user')
-//     ->middleware(['auth:sanctum']);
+
 
 
 /**

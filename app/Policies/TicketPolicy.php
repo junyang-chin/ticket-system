@@ -6,6 +6,7 @@ use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class TicketPolicy
@@ -21,6 +22,7 @@ class TicketPolicy
     public function viewAny(User $user)
     {
         //
+        return Auth::id() === $user->id;
     }
 
     /**
@@ -45,6 +47,7 @@ class TicketPolicy
     public function create(User $user)
     {
         //
+        return Auth::user()->id === $user->id;
     }
 
     /**

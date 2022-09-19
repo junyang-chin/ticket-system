@@ -37,7 +37,7 @@ class TicketTest extends TestCase
         $ticketB = Ticket::factory()->for($this->user)->create();
         $ticketC = Ticket::factory()->for($this->userB)->create();
 
-        $this->getJson('api/ticket')
+        $this->getJson('/api/ticket')
             ->assertJsonCount(2, 'data');
     }
 
@@ -92,9 +92,9 @@ class TicketTest extends TestCase
         $ticketA = Ticket::factory()->for($this->user)->create();
         $ticketB = Ticket::factory()->for($this->userB)->create();
         $this->deleteJson('api/ticket/' . $ticketB->id)
-        ->assertStatus(403);
+            ->assertStatus(403);
 
         // make sure class is not deleted from db
-        $this->assertDatabaseHas(Ticket::class, ['id'=>$ticketB->id]);
+        $this->assertDatabaseHas(Ticket::class, ['id' => $ticketB->id]);
     }
 }

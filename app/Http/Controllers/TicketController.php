@@ -11,7 +11,7 @@ class TicketController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(TicketController::class, 'ticket');
+        $this->authorizeResource(Ticket::class, 'ticket'); // apply the resource policy to the resource controller then to the model
     }
     /**
      * Display a listing of the resource.
@@ -43,7 +43,8 @@ class TicketController extends Controller
     public function store(Request $request) //TODO validate request
     {
         //
-        return TicketResource::make(Auth::user()->tickets()->create($request->all()));
+        $ticket = Auth::user()->tickets()->create($request->all());
+        return TicketResource::make($ticket);
     }
 
     /**
