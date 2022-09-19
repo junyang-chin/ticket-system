@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\TicketStatusResource;
+use App\Models\TicketStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +34,7 @@ Route::post('/logout-user', [AuthController::class, 'logout'])->middleware('auth
 
 /**
  * Resource api
- */ 
+ */
 Route::middleware(['auth:sanctum'])->group(function () {
     // user
     Route::apiResource('/user', UserController::class);
@@ -40,6 +42,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/ticket', TicketController::class);
 
     // status list
-    // Route::get('/status', [S])
-});    
-
+    Route::get('/ticket-statuses', function () {
+        return  TicketStatusResource::collection(TicketStatus::all());
+    });
+});
