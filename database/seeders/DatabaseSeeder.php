@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
+            TicketStatusSeeder::class,
             CategorySeeder::class,
             PermissionRoleSeeder::class,
             UserSeeder::class,

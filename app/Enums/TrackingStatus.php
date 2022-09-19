@@ -15,7 +15,7 @@ final class TrackingStatus extends Enum
     private const BACKLOG = 'backlog';
     private const COMPLETED = 'completed';
 
-
+    public static $statuses = [self::IN_PROGRESS, self::BACKLOG, self::COMPLETED];
 
     /**
      * return a random constant

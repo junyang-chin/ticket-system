@@ -22,16 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/**
- * Resource api
- */
-Route::middleware(['auth:sanctum'])->group(function () {
-    // user
-    Route::apiResource('/user', UserController::class);
-    // ticket
-    Route::apiResource('/ticket', TicketController::class);
-});
-
 
 
 /**
@@ -39,3 +29,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
  */
 Route::post('/login-user', [AuthController::class, 'login']);
 Route::post('/logout-user', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+/**
+ * Resource api
+ */ 
+Route::middleware(['auth:sanctum'])->group(function () {
+    // user
+    Route::apiResource('/user', UserController::class);
+    // ticket
+    Route::apiResource('/ticket', TicketController::class);
+
+    // status list
+    // Route::get('/status', [S])
+});    
+
