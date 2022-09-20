@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -98,5 +99,37 @@ class TicketController extends Controller
         $ticket->delete();
         return response(null, 204);
         abort(403);
+    }
+
+    //for search
+    public function search(SearchTicketRequest $request)
+    {
+        $collection = Ticket::query()
+            ->when($request->user_id, function ($q) use ($request) {
+                // find by user id
+                $q->where('user_id', $request->user_id);
+            })
+            ->when($request->search_title, function ($q) use ($request) {
+                // find by title
+                $q->where('title', 'like', "%$request->search_title%");
+            })
+            ->when($request->search_status, function ($q) use ($request) {
+                // find by relation 1-1
+                $q->whereHas('status', function ($q) use ($request) {
+
+                    // find by status name
+                    $q->where('status', $request->search_status);
+                });
+            })
+            ->when($request->search_category, function ($q) use ($request) {
+                //  find by relation 1-1
+                $q->whereHas('category', function ($q) use ($request) {
+                    // find by category name
+                    $q->where('name', $request->search_category);
+                });
+            })
+            ->get();
+            
+            return TicketResource::collection($collection);
     }
 }

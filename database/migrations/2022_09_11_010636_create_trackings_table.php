@@ -16,10 +16,10 @@ class CreateTrackingsTable extends Migration
         Schema::create('trackings', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description', 'max');
-            $table->string('priority');
-            $table->string('status');
+            $table->text('description');
+            $table->foreignId('tracking_status_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('category_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('tracking_priority_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->string('pr_id')->nullable();
             $table->timestamps();
         });

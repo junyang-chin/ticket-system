@@ -45,4 +45,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/ticket-statuses', function () {
         return  TicketStatusResource::collection(TicketStatus::all());
     });
+
+    // search ticket
+    Route::post('/ticket/search', [TicketController::class, 'search']);
+
 });

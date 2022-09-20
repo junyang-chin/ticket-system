@@ -17,9 +17,9 @@ class TicketFactory extends Factory
         return [
             //
             'category_id' => rand(1,3),
-            'title' => 'title here',
-            'description'=> 'some description',
-            'status' => TicketStatus::PENDING(),
+            'title' => $this->faker->sentence(4),
+            'description'=> $this->faker->sentences(3,true),
+            'status' => TicketStatus::random(),
             'comment' => null,
         ];
     }
