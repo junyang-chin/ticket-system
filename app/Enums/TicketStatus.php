@@ -5,17 +5,17 @@ namespace App\Enums;
 use MyCLabs\Enum\Enum;
 
 /**
- * @method static Action PENDING()
- * @method static Action OPEN()
- * @method static Action CLOSED()
+ * @method static Action IN_PROGRESS()
+ * @method static Action BACKLOG()
+ * @method static Action COMPLETED()
  */
 final class TicketStatus extends Enum
 {
-    private const PENDING = 'pending';
-    private const OPEN = 'open';
-    private const CLOSED = 'closed';
+    private const IN_PROGRESS = 'in_progress';
+    private const BACKLOG = 'backlog';
+    private const COMPLETED = 'completed';
 
-    public static $statuses = [self::PENDING, self::OPEN, self::CLOSED];
+    public static $statuses = [self::IN_PROGRESS, self::BACKLOG, self::COMPLETED];
 
     /**
      * return a random constant

@@ -18,7 +18,8 @@ class CreateTicketsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->foreignId('category_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
-            $table->foreignId('status_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();;
+            $table->foreignId('ticket_status_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('ticket_priority_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->text('comment')->nullable();
             $table->timestamps();

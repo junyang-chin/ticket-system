@@ -15,8 +15,6 @@ use function PHPUnit\Framework\assertJson;
 
 class TicketTest extends TestCase
 {
-
-
     public function setUp(): void
     {
 
@@ -141,7 +139,7 @@ class TicketTest extends TestCase
 
 
         $this->postJson('api/ticket/search', [
-            'search_status' => $ticketB->status_id,
+            'search_status' => $ticketB->ticketStatus()->where('id', $ticketB->status_id)->value('status'),
             'search_category' => $ticketB->category->name,
         ])
             ->assertJson([

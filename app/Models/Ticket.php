@@ -33,7 +33,7 @@ class Ticket extends Model
     /**
      * One to one
      */
-    public function status()
+    public function ticketStatus()
     {
         return $this->hasOne(TicketStatus::class);
     }

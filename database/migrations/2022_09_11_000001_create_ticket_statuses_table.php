@@ -13,9 +13,9 @@ class CreateTicketStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tracking_statuses', function (Blueprint $table) {
+        Schema::create('ticket_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('status',50);
+            $table->string('status');
             $table->timestamps();
         });
     }

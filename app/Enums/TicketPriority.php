@@ -9,7 +9,7 @@ use MyCLabs\Enum\Enum;
  * @method static Action MID()
  * @method static Action LOW()
  */
-final class TrackingPriority extends Enum
+final class TicketPriority extends Enum
 {
     private const HIGH = 'high';
     private const MID = 'mid';

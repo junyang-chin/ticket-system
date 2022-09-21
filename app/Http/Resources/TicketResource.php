@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Ticket;
+use App\Models\TicketStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TicketResource extends JsonResource
@@ -14,15 +16,15 @@ class TicketResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
+        // dd($this->ticketStatus()->);
         return [
-            'ticket_id'=>$this->id,
-            'user'=> $this->user->name,
+            'ticket_id' => $this->id,
             'category' => $this->category->name,
-            'title'=> $this->title,
-            'description'=> $this->description,
-            'status'=> $this->status,
-            'comment'=> $this->comment,
+            'title' => $this->title,
+            'description' => $this->description,
+            'status' => $this->ticketStatus()->where('id', $this->ticket_status_id),
+            'user' => $this->user->name,
+            'comment' => $this->comment,
         ];
     }
 }

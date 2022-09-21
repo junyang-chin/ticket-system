@@ -16,10 +16,10 @@ class TicketFactory extends Factory
     {
         return [
             //
-            'category_id' => rand(1,3),
             'title' => $this->faker->sentence(4),
             'description'=> $this->faker->sentences(3,true),
-            'status' => TicketStatus::random(),
+            'category_id' => rand(1,3),
+            'ticket_status_id' => rand(1,3),
             'comment' => null,
         ];
     }
