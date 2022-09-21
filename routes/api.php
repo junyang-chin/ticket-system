@@ -33,11 +33,16 @@ Route::post('/login-user', [AuthController::class, 'login']);
 Route::post('/logout-user', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 /**
- * Resource api
+ * Api that requires authentiction
  */
 Route::middleware(['auth:sanctum'])->group(function () {
     // user
-    Route::apiResource('/user', UserController::class);
+    //TODO separte store
+    Route::resource('/user', UserController::class)->except([
+        'store'
+    ]);
+
+
     // ticket
     Route::apiResource('/ticket', TicketController::class);
 
@@ -48,5 +53,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // search ticket
     Route::post('/ticket/search', [TicketController::class, 'search']);
-
 });
+
+// TODO Create User Api without authentication
+Route::post('/user', [UserController::class, 'store']);

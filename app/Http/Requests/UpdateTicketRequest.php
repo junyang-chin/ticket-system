@@ -27,11 +27,12 @@ class UpdateTicketRequest extends FormRequest
     {
         return [
             //
-            'category_id'=> 'exists:categories,id',
             'title' => 'string',
             'description' => 'string',
-            'status'=> Rule::in(TicketStatus::$types),
-            'comment'=> 'string'
+            'category_id' => 'exists:categories,id',
+            'ticket_status_id' => 'exists:ticket_statuses,id',
+            'ticket_priority_id' => 'exists:ticket_priorities,id',
+            'comment' => 'string'
 
         ];
     }

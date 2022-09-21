@@ -15,7 +15,7 @@ class TicketStatus extends Model
      */
     public function tickets()
     {
-        $this->belongsTo(Ticket::class);
+        $this->hasMany(Ticket::class);
     }
 }
 

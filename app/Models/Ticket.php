@@ -31,10 +31,17 @@ class Ticket extends Model
 
 
     /**
-     * One to one
+     * One to Many(inverse)
      */
     public function ticketStatus()
     {
-        return $this->hasOne(TicketStatus::class);
+        return $this->belongsTo(TicketStatus::class);
+    }
+    /**
+     * One to Many(inverse)
+     */
+    public function ticketPriority()
+    {
+        return $this->belongsTo(TicketPriority::class);
     }
 }

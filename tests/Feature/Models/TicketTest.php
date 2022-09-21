@@ -104,7 +104,7 @@ class TicketTest extends TestCase
         //ticket c belongs to user B
         $ticketC = Ticket::factory()->for($this->userB)->create();
 
-        $this->postJson('api/ticket/search', ['search_user_id' => $this->user->id])
+        $this->postJson('api/ticket/search', ['search_user_name' => $this->user->name])
             ->assertJsonCount(2, 'data')
             ->assertJson([
                 'data' => [
@@ -137,10 +137,11 @@ class TicketTest extends TestCase
         //ticket c belongs to user B
         $ticketC = Ticket::factory()->for($this->userB)->create();
 
+        // dd($ticketB->category->name);
 
         $this->postJson('api/ticket/search', [
-            'search_status' => $ticketB->ticketStatus()->where('id', $ticketB->status_id)->value('status'),
-            'search_category' => $ticketB->category->name,
+            'search_status'=> $ticketB->ticketStatus->status,
+            'search_category'=> $ticketB->category->name,
         ])
             ->assertJson([
                 'data' => [

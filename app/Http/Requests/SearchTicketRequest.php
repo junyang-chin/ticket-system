@@ -25,10 +25,10 @@ class SearchTicketRequest extends FormRequest
     {
         return [
             //
-            'search_user_id' => 'exists:users,id',
+            'search_user_name' => 'string',
             'search_title' => 'string',
-            'search_status' => 'string|exists:ticket_statuses,status',
-            'search_category' => 'string|exists:categories,name'
+            'search_status' => 'string',
+            'search_category' => 'string'
         ];
     }
 }

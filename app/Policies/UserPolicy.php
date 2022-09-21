@@ -20,7 +20,6 @@ class UserPolicy
     public function viewAny(User $user)
     {
         //
-        // dd($user->hasPermissionTo('user_index'));
         return $user->hasPermissionTo('user_index');
     }
 
@@ -34,7 +33,6 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         //
-        // dd($user->hasPermissionTo('user_show'));
         return ($user->hasPermissionTo('user_show')) && ($user->id === $model->id);
     }
 
@@ -47,8 +45,7 @@ class UserPolicy
     public function create(User $user)
     {
         //
-        // dd($user->hasPermissionTo('user_store'));
-        return $user->hasPermissionTo('user_store');
+        return true;
     }
 
     /**

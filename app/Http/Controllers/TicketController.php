@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
+    // TODO separate business logic from controller using service class https://farhan.dev/tutorial/laravel-service-classes-explained/
     public function __construct()
     {
         $this->authorizeResource(Ticket::class, 'ticket'); // apply the resource policy to the resource controller then to the model
@@ -105,9 +106,13 @@ class TicketController extends Controller
     public function search(SearchTicketRequest $request)
     {
         $collection = Ticket::query()
-            ->when($request->user_id, function ($q) use ($request) {
-                // find by user id
-                $q->where('user_id', $request->user_id);
+            ->when($request->search_user_name, function ($q) use ($request) {
+                // find by relation 1-many(inverse)
+                $q->whereHas('user', function ($q) use ($request) {
+
+                    // find by user name
+                    $q->where('name', 'like', "%$request->search_user_name%");
+                });
             })
             ->when($request->search_title, function ($q) use ($request) {
                 // find by title
@@ -115,7 +120,7 @@ class TicketController extends Controller
             })
             ->when($request->search_status, function ($q) use ($request) {
                 // find by relation 1-1
-                $q->whereHas('status', function ($q) use ($request) {
+                $q->whereHas('ticketStatus', function ($q) use ($request) {
 
                     // find by status name
                     $q->where('status', $request->search_status);
@@ -128,8 +133,15 @@ class TicketController extends Controller
                     $q->where('name', $request->search_category);
                 });
             })
+            ->when($request->ticket_priority, function ($q) use ($request) {
+                // find by relation 1-1
+                $q->whereHas('ticketPriority', function ($q) use ($request) {
+                    // find by priority column
+                    $q->where('priority', $request->search_priority);
+                });
+            })
             ->get();
-            
-            return TicketResource::collection($collection);
+
+        return TicketResource::collection($collection);
     }
 }

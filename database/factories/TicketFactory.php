@@ -20,6 +20,7 @@ class TicketFactory extends Factory
             'description'=> $this->faker->sentences(3,true),
             'category_id' => rand(1,3),
             'ticket_status_id' => rand(1,3),
+            'ticket_priority_id' => rand(1,3),
             'comment' => null,
         ];
     }
