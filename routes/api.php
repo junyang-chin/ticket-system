@@ -5,7 +5,6 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\TicketStatusResource;
 use App\Models\TicketStatus;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,12 +19,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-
 /**
  * User login logout
  */
@@ -38,13 +31,11 @@ Route::post('/logout-user', [AuthController::class, 'logout'])->middleware('auth
 Route::middleware(['auth:sanctum'])->group(function () {
     // user
     //TODO separte store
-    Route::resource('/user', UserController::class)->except([
-        'store'
+    Route::apiResources([
+        '/user' => UserController::class,
+        '/ticket' => TicketController::class,
     ]);
 
-
-    // ticket
-    Route::apiResource('/ticket', TicketController::class);
 
     // status list
     Route::get('/ticket-statuses', function () {
@@ -55,5 +46,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/ticket/search', [TicketController::class, 'search']);
 });
 
-// TODO Create User Api without authentication
-Route::post('/user', [UserController::class, 'store']);
+// Create User Api without authentication
+Route::post('/register-user', [UserController::class, 'register']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        //spatie
+        //policy
         $this->authorizeResource(User::class, 'user');
     }
 
@@ -26,7 +27,7 @@ class UserController extends Controller
         //
         return UserResource::collection(User::all());
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -36,14 +37,14 @@ class UserController extends Controller
     {
         //
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request) //TODO validate email is unique
+    public function store(StoreUserRequest $request) // validate email is unique
     {
         //
         $user = User::create($request->all());
@@ -81,7 +82,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         //
         $user = User::findorFail($user->id);
@@ -100,5 +101,12 @@ class UserController extends Controller
         //
         User::findorFail($user->id)->delete();
         return User::all();
+    }
+
+    public function register(StoreUserRequest $request)
+    {
+        $user = User::create($request->all());
+        $user->assignRole('user');
+        return new UserResource($user);
     }
 }

@@ -15,9 +15,8 @@ class CreateTicketDeveloperTable extends Migration
     {
         Schema::create('ticket_developer', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('developer_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('ticket_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
-            $table->foreignId('admin_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('developer_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
         });
     }

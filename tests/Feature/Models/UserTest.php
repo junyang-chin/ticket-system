@@ -92,12 +92,10 @@ class UserTest extends TestCase
      */
     public function test_user_update_itself()
     {
-        $this->fakeUser->name = 'change name';
-
-        $response = $this->putJson('api/user/' . $this->fakeUser->id, $this->fakeUser->toArray());
+        $response = $this->putJson('api/user/' . $this->fakeUser->id, ['name' => 'new name']);
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(User::class, ['id' => $this->fakeUser->id, 'name' => $this->fakeUser->name]);
+        $this->assertDatabaseHas(User::class, ['id' => $this->fakeUser->id, 'name' => 'new name']);
     }
     /**
      * Test update user by id
