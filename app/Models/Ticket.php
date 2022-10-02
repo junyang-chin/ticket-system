@@ -44,4 +44,11 @@ class Ticket extends Model
     {
         return $this->belongsTo(TicketPriority::class);
     }
+
+
+    // TODO: test pivot table
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class, 'ticket_id');
+    }
 }

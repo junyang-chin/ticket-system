@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\TicketStatusResource;
+use App\Models\Assignment;
 use App\Models\TicketStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,29 +24,34 @@ use Illuminate\Support\Facades\Route;
 /**
  * User login logout
  */
-Route::post('/login-user', [AuthController::class, 'login']);
-Route::post('/logout-user', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post("/login-user", [AuthController::class, "login"]);
+Route::post("/logout-user", [AuthController::class, "logout"])->middleware(
+    "auth:sanctum"
+);
 
 /**
  * Api that requires authentiction
  */
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(["auth:sanctum"])->group(function () {
     // user
     //TODO separte store
     Route::apiResources([
-        '/user' => UserController::class,
-        '/ticket' => TicketController::class,
+        "user" => UserController::class,
+        "ticket" => TicketController::class,
     ]);
+
+    //ticket assignments
+    Route::resource('tickets.assignments', AssignmentController::class)->only(['index', 'store', 'update', 'delete']);
 
 
     // status list
-    Route::get('/ticket-statuses', function () {
-        return  TicketStatusResource::collection(TicketStatus::all());
+    Route::get("ticket-statuses", function () {
+        return TicketStatusResource::collection(TicketStatus::all());
     });
 
     // search ticket
-    Route::post('/ticket/search', [TicketController::class, 'search']);
+    Route::post("ticket/search", [TicketController::class, "search"]);
 });
 
 // Create User Api without authentication
-Route::post('/register-user', [UserController::class, 'register']);
+Route::post("register-user", [UserController::class, "register"]);

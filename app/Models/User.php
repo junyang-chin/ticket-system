@@ -18,9 +18,7 @@ class User extends Authenticatable
     /**
      * Set default attribute
      */
-    protected $attributes = [
-        
-    ];
+    protected $attributes = [];
 
     /**
      * The attributes that are mass assignable.
@@ -39,7 +37,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        // 'password',
+        'password',
         'remember_token',
     ];
 
@@ -63,5 +61,12 @@ class User extends Authenticatable
     public function tickets()
     {
         return  $this->hasMany(Ticket::class);
+    }
+
+
+    // TODO: Test pivot table
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class, 'developer_id');
     }
 }

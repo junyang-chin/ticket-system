@@ -17,70 +17,85 @@ class TicketTest extends TestCase
 {
     public function setUp(): void
     {
-
         // must call parent method first always
         parent::setUp();
 
         $this->user = User::factory()->create();
-        $this->user->assignRole('user');
+        $this->user->assignRole("user");
         $this->userB = User::factory()->create();
-        $this->userB->assignRole('user');
+        $this->userB->assignRole("user");
         Sanctum::actingAs($this->user);
     }
 
-
     public function test_can_view_their_own_tickets()
     {
-        $ticketA = Ticket::factory()->for($this->user)->create();
-        $ticketB = Ticket::factory()->for($this->user)->create();
-        $ticketC = Ticket::factory()->for($this->userB)->create();
+        $ticketA = Ticket::factory()
+            ->for($this->user)
+            ->create();
+        $ticketB = Ticket::factory()
+            ->for($this->user)
+            ->create();
+        $ticketC = Ticket::factory()
+            ->for($this->userB)
+            ->create();
 
-        $this->getJson('/api/ticket')
-            ->assertJsonCount(2, 'data');
+        $this->getJson("/api/ticket")->assertJsonCount(2, "data");
     }
 
     public function test_can_view_one_of_their_own_tickets()
     {
-        $ticketA = Ticket::factory()->for($this->user)->create();
-        $ticketB = Ticket::factory()->for($this->user)->create();
-        $ticketC = Ticket::factory()->for($this->userB)->create();
+        $ticketA = Ticket::factory()
+            ->for($this->user)
+            ->create();
+        $ticketB = Ticket::factory()
+            ->for($this->user)
+            ->create();
+        $ticketC = Ticket::factory()
+            ->for($this->userB)
+            ->create();
 
-        $this->getJson('api/ticket/' . $ticketA->id)
+        $this->getJson("api/ticket/" . $ticketA->id)
             ->assertJsonCount(1)
             ->assertJson([
-                'data' => [
-                    'category' => $ticketA->category->name,
-                ]
+                "data" => [
+                    "category" => $ticketA->category->name,
+                ],
             ]);
     }
     public function test_can_create_ticket()
     {
         $ticketA = Ticket::factory()->make();
 
-        $this->postJson('api/ticket', $ticketA->toArray())
-            ->assertStatus(201);
+        $this->postJson("api/ticket", $ticketA->toArray())->assertStatus(201);
     }
 
     public function test_can_update_ticket()
     {
-        $ticket = Ticket::factory()->for($this->user)->create();
+        $ticket = Ticket::factory()
+            ->for($this->user)
+            ->create();
 
-        $this->putJson('api/ticket/' . $ticket->id, ['category_id' => 2])
-            ->assertStatus(200);
+        $this->putJson("api/ticket/" . $ticket->id, [
+            "category_id" => 2,
+        ])->assertStatus(200);
     }
     public function test_cannot_update_other_ticket()
     {
-        $ticket = Ticket::factory()->for($this->userB)->create();
+        $ticket = Ticket::factory()
+            ->for($this->userB)
+            ->create();
 
-        $this->putJson('api/ticket/' . $ticket->id, ['category_id' => 2])
-            ->assertStatus(403);
+        $this->putJson("api/ticket/" . $ticket->id, [
+            "category_id" => 2,
+        ])->assertStatus(403);
     }
 
     public function test_can_delete_own_ticket()
     {
-        $ticket = Ticket::factory()->for($this->user)->create();
-        $this->deleteJson('api/ticket/' . $ticket->id)
-            ->assertStatus(204);
+        $ticket = Ticket::factory()
+            ->for($this->user)
+            ->create();
+        $this->deleteJson("api/ticket/" . $ticket->id)->assertStatus(204);
 
         // make sure class is deleted from db
         $this->assertDatabaseMissing(Ticket::class, $ticket->toArray());
@@ -88,65 +103,79 @@ class TicketTest extends TestCase
 
     public function test_cannot_delete_others_ticket()
     {
-        $ticketA = Ticket::factory()->for($this->user)->create();
-        $ticketB = Ticket::factory()->for($this->userB)->create();
-        $this->deleteJson('api/ticket/' . $ticketB->id)
-            ->assertStatus(403);
+        $ticketA = Ticket::factory()
+            ->for($this->user)
+            ->create();
+        $ticketB = Ticket::factory()
+            ->for($this->userB)
+            ->create();
+        $this->deleteJson("api/ticket/" . $ticketB->id)->assertStatus(403);
 
         // make sure class is not deleted from db
-        $this->assertDatabaseHas(Ticket::class, ['id' => $ticketB->id]);
+        $this->assertDatabaseHas(Ticket::class, ["id" => $ticketB->id]);
     }
 
     public function test_users_can_search_ticket_by_user_id()
     {
-        $ticketA = Ticket::factory()->for($this->user)->create();
-        $ticketB = Ticket::factory()->for($this->user)->create();
+        $ticketA = Ticket::factory()
+            ->for($this->user)
+            ->create();
+        $ticketB = Ticket::factory()
+            ->for($this->user)
+            ->create();
         //ticket c belongs to user B
-        $ticketC = Ticket::factory()->for($this->userB)->create();
+        $ticketC = Ticket::factory()
+            ->for($this->userB)
+            ->create();
 
-        $this->postJson('api/ticket/search', ['search_user_name' => $this->user->name])
-            ->assertJsonCount(2, 'data')
+        $this->postJson("api/ticket/search", [
+            "search_user_name" => $this->user->name,
+        ])
+            ->assertJsonCount(2, "data")
             ->assertJson([
-                'data' => [
-                    ['ticket_id' => $ticketA->id]
-                ]
+                "data" => [["ticket_id" => $ticketA->id]],
             ]);
     }
     public function test_users_can_search_by_title_and_category()
     {
-        $ticketA = Ticket::factory()->for($this->user)->create();
-        $ticketB = Ticket::factory()->for($this->user)->create();
+        $ticketA = Ticket::factory()
+            ->for($this->user)
+            ->create();
+        $ticketB = Ticket::factory()
+            ->for($this->user)
+            ->create();
         //ticket c belongs to user B
-        $ticketC = Ticket::factory()->for($this->userB)->create();
+        $ticketC = Ticket::factory()
+            ->for($this->userB)
+            ->create();
 
-
-        $this->postJson('api/ticket/search', [
-            'search_title' => $ticketB->title,
-            'search_category' => $ticketB->category->name,
-        ])
-            ->assertJson([
-                'data' => [
-                    ['ticket_id' => $ticketB->id]
-                ]
-            ]);
+        $this->postJson("api/ticket/search", [
+            "search_title" => $ticketB->title,
+            "search_category" => $ticketB->category->name,
+        ])->assertJson([
+            "data" => [["ticket_id" => $ticketB->id]],
+        ]);
     }
     public function test_users_can_search_by_status_and_category()
     {
-        $ticketA = Ticket::factory()->for($this->user)->create();
-        $ticketB = Ticket::factory()->for($this->user)->create();
+        $ticketA = Ticket::factory()
+            ->for($this->user)
+            ->create();
+        $ticketB = Ticket::factory()
+            ->for($this->user)
+            ->create();
         //ticket c belongs to user B
-        $ticketC = Ticket::factory()->for($this->userB)->create();
+        $ticketC = Ticket::factory()
+            ->for($this->userB)
+            ->create();
 
         // dd($ticketB->category->name);
 
-        $this->postJson('api/ticket/search', [
-            'search_status'=> $ticketB->ticketStatus->status,
-            'search_category'=> $ticketB->category->name,
-        ])
-            ->assertJson([
-                'data' => [
-                    ['ticket_id' => $ticketB->id]
-                ]
-            ]);
+        $this->postJson("api/ticket/search", [
+            "search_status" => $ticketB->ticketStatus->status,
+            "search_category" => $ticketB->category->name,
+        ])->assertJson([
+            "data" => [["ticket_id" => $ticketB->id]],
+        ]);
     }
 }

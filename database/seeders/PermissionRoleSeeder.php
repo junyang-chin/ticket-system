@@ -34,6 +34,17 @@ class PermissionRoleSeeder extends Seeder
                 'ticket_show',
             ]
         );
+        $developer = Role::create(['name' => 'developer']);
+        $developer->givePermissionTo(
+            [
+                'user_index',
+                'user_show',
+                'user_store',
+                'user_update',
+                'user_destroy',
+                'ticket_show',
+            ]
+        );
 
 
         $user = Role::create(['name' => 'user']);
