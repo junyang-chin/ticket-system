@@ -41,7 +41,9 @@ Route::middleware(["auth:sanctum"])->group(function () {
     ]);
 
     //ticket assignments
-    Route::resource('tickets.assignments', AssignmentController::class)->only(['index', 'store', 'update', 'delete']);
+    Route::resource('tickets.assignments', AssignmentController::class)->only(['index', 'store', 'destroy'])->scoped([
+        'assignment' => 'developer_id'
+    ]);
 
 
     // status list

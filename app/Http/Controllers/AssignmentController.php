@@ -28,10 +28,11 @@ class AssignmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($ticket_id)
     {
         //
-
+        $collection = $this->assignmentService->getDevelopers($ticket_id);
+        return AssignmentResource::collection($collection);
     }
 
     /**
@@ -50,10 +51,10 @@ class AssignmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($ticket_id, Request $request)
+    public function store(Request $request, $ticket_id)
     {
         //
-        $collection = $this->assignmentService->assignDevelopers($ticket_id, $request->developer_id);
+        $collection = $this->assignmentService->assignDeveloper($ticket_id, $request->developer_id);
         return AssignmentResource::collection($collection);
     }
 
@@ -97,8 +98,10 @@ class AssignmentController extends Controller
      * @param  \App\Models\Assignment  $assignment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Assignment $assignment)
+    public function destroy($ticket_id, Assignment $assignment)
     {
         //
+        $collection = $this->assignmentService->removeDeveloper($ticket_id, $assignment->developer_id);
+        return AssignmentResource::collection($collection);
     }
 }

@@ -7,11 +7,13 @@ use App\Models\Ticket;
 use App\Models\User;
 
 /**
- * @method assignDevelopersToTicket
+ * @method assignDeveloper
+ * @method getDevelopers
+ * @method removeDeveloper
  */
 class AssignmentService
 {
-    public function assignDevelopers($ticket_id, $developer_id)
+    public function assignDeveloper($ticket_id, $developer_id)
     {
         // auth
         $ticket = Ticket::find($ticket_id);
@@ -28,7 +30,14 @@ class AssignmentService
 
     public function getDevelopers($ticket_id)
     {
+        $ticket = Ticket::find($ticket_id);
+        return $ticket->developers;
+    }
 
-        // dd($this->users()->where('id', $this->developer_id)->value('name'));
+    public function removeDeveloper($ticket_id, $developer_id)
+    {
+        $ticket = Ticket::find($ticket_id);
+        $ticket->developers()->detach($developer_id);
+        return $ticket->developers;
     }
 }

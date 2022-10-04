@@ -73,21 +73,22 @@ class AssignmentTest extends TestCase
     public function test_can_view_assigned_developers()
     {
         Sanctum::actingAs($this->admin);
-        Assignment::create([
-            'ticket_id' => $this->ticketA->id,
-            'developer_id' => $this->developerA->id,
-        ]);
-        Assignment::create([
-            'ticket_id' => $this->ticketA->id,
-            'developer_id' => $this->developerB->id,
-        ]);
+        $this->ticketA->developers()->attach($this->developerA->id);
 
         $this->getJson('api/tickets/' . $this->ticketA->id . '/assignments')
             ->assertJson([
                 'data' => [
-                    'ticket_id' => $this->ticketA->id,
-                    'developers' => [$this->developerA->id, $this->developerB->id],
+                    ['developer_name' => $this->developerA->name]
                 ]
             ]);
+    }
+
+    public function test_can_remove_assignment()
+    {
+        Sanctum::actingAs($this->admin);
+        $this->ticketA->developers()->attach($this->developerA->id);
+        $this->ticketA->developers()->attach($this->developerB->id);
+        // dump($this->developerA->id);
+        $this->deleteJson('api/tickets/' . $this->ticketA->id . '/assignments/' . $this->developerA->id)->assertJsonCount(1, 'data');
     }
 }
