@@ -65,8 +65,14 @@ class User extends Authenticatable
 
 
     // TODO: Test pivot table
+    // public function assignments()
+    // {
+    //     return $this->hasMany(Assignment::class, 'developer_id');
+    // }
+
+    // test
     public function assignments()
     {
-        return $this->hasMany(Assignment::class, 'developer_id');
+        return $this->belongsToMany(Ticket::class, 'assignments', 'user_id', 'ticket_id')->as('assignments')->withTimestamps();
     }
 }

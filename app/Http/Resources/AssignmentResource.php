@@ -14,11 +14,9 @@ class AssignmentResource extends JsonResource
      */
     public function toArray($request)
     {
-        // dd($this->tickets);
-
         return [
-            'ticket_id' => $this->ticket_id,
-            'developers' => $this->users()->where('id', $this->developer_id)->value('name'),
+            'developer_id' => $this->id,
+            'developer_name' => $this->name,
         ];
     }
 }

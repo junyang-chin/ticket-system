@@ -27,6 +27,7 @@ class UpdateTicketRequest extends FormRequest
     {
         return [
             //
+            'id' => 'prohibited',
             'title' => 'string',
             'description' => 'string',
             'category_id' => 'exists:categories,id',

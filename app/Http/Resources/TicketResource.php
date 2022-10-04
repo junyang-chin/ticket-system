@@ -16,7 +16,7 @@ class TicketResource extends JsonResource
      */
     public function toArray($request)
     {
-        // dd($this->ticketStatus()->);
+        // dd($this->ticketStatus->status);
         return [
             'ticket_id' => $this->id,
             'category' => $this->category->name,

@@ -47,8 +47,14 @@ class Ticket extends Model
 
 
     // TODO: test pivot table
-    public function assignments()
+    // public function assignments()
+    // {
+    //     return $this->hasMany(Assignment::class, 'ticket_id');
+    // }
+
+    // test many to many 
+    public function developers()
     {
-        return $this->hasMany(Assignment::class, 'ticket_id');
+        return $this->belongsToMany(User::class, 'assignments', 'ticket_id', 'developer_id')->as('assignments')->withTimestamps();
     }
 }

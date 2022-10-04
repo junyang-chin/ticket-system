@@ -27,11 +27,11 @@ class StoreTicketRequest extends FormRequest
     {
         return [
             //
-            'title' => 'string',
-            'description' => 'string',
-            'category_id' => 'exists:categories,id',
-            'ticket_status_id' => 'exists:ticket_statuses,id',
-            'ticket_priority_id' => 'exists:ticket_priorities,id',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'ticket_status_id' => 'required|exists:ticket_statuses,id',
+            'ticket_priority_id' => 'required|exists:ticket_priorities,id',
             'comment' => 'string'
         ];
     }

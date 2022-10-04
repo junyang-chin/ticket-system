@@ -82,7 +82,7 @@ class UserTest extends TestCase
      */
     public function test_create_user()
     {
-        $user = $this->getUserData();
+        $user = ['name' => 'fakename', 'email' => 'testemal@email.com', 'password' => 'pwd123'];
         $response = $this->postJson('api/user', $user);
         $response->assertStatus(201); //or 
     }

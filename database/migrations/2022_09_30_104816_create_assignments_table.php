@@ -14,12 +14,12 @@ class CreateAssignmentsTable extends Migration
     public function up()
     {
         Schema::create('assignments', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            // $table->id();
             $table->unsignedBigInteger('developer_id');
             $table->foreign('developer_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedBigInteger('ticket_id');
             $table->foreign('ticket_id')->references('id')->on('tickets')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\AssignmentResource;
+use App\Http\Resources\TicketResource;
 use App\Http\Services\AssignmentService;
 use App\Models\Assignment;
 use App\Models\Ticket;
@@ -30,6 +31,7 @@ class AssignmentController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -51,8 +53,8 @@ class AssignmentController extends Controller
     public function store($ticket_id, Request $request)
     {
         //
-        $assignment = $this->assignmentService->assignDevelopers($ticket_id, $request->developer_id);
-        return new AssignmentResource($assignment);
+        $collection = $this->assignmentService->assignDevelopers($ticket_id, $request->developer_id);
+        return AssignmentResource::collection($collection);
     }
 
     /**
