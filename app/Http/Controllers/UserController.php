@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -27,7 +28,7 @@ class UserController extends Controller
         //
         return UserResource::collection(User::all());
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +38,7 @@ class UserController extends Controller
     {
         //
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -108,5 +109,17 @@ class UserController extends Controller
         $user = User::create($request->all());
         $user->assignRole('user');
         return new UserResource($user);
+    }
+
+
+    public function search(Request $request) //validate request
+    {
+
+
+        // $developers = DB::table('users')->where('name', 'like', "%$request->search_developer_name%")
+        // ->where(function ($q)
+        // {
+        //     $q->select()
+        // })
     }
 }

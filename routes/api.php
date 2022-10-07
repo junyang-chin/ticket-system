@@ -6,8 +6,11 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\TicketStatusResource;
 use App\Models\Assignment;
+use App\Models\Category;
+use App\Models\TicketPriority;
 use App\Models\TicketStatus;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,13 +49,27 @@ Route::middleware(["auth:sanctum"])->group(function () {
     ]);
 
 
-    // status list
-    Route::get("ticket-statuses", function () {
-        return TicketStatusResource::collection(TicketStatus::all());
+    // category list
+    Route::get('category', function () {
+        return JsonResource::collection(Category::all());
     });
+
+    // status list
+    Route::get("ticket-status", function () {
+        return JsonResource::collection(TicketStatus::all());
+    });
+
+    // priority list
+    Route::get("ticket-priority", function () {
+        return JsonResource::collection(TicketPriority::all());
+    });
+
 
     // search ticket
     Route::post("ticket/search", [TicketController::class, "search"]);
+
+    // search developer
+    Route::post("developer/search", [UserController::class, "search"]);
 });
 
 // Create User Api without authentication

@@ -23,9 +23,12 @@ class UserTest extends TestCase
         // create fake user as property
         $this->fakeUser = User::factory()->create();
         $this->fakeUser->assignRole('user');
-        // $admin = User::findorFail(1);
-        // $admin->assignRole('admin');
-
+        $this->admin = User::factory()->create();
+        $this->admin->assignRole('admin');
+        $this->developerA = User::factory()->create();
+        $this->developerA->assignRole('developer');
+        $this->developerB = User::factory()->create();
+        $this->developerB->assignRole('developer');
 
         // authenticate user
         Sanctum::actingAs($this->fakeUser);
@@ -136,5 +139,10 @@ class UserTest extends TestCase
         $this->fakeUser->assignRole('user');
         $response = $this->deleteJson('api/user/' . $this->fakeUser->id);
         $response->assertStatus(403);
+    }
+
+    public function test_search_developer()
+    {
+        $this->postJson('api/developer/search/', ['search_developer_name' => $this->developerA->name])->assertJson(['data' => 'dasdf']);
     }
 }
