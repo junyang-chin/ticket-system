@@ -26,7 +26,7 @@ class AuthController extends Controller
         if ($user && Hash::check($request['password'], $user->password)) {
             // generate token
             $token = $user->createToken('ApiToken')->plainTextToken;
-            return response()->json(['data'=>['token' => $token]],200);
+            return response()->json(['data' => ['name' => $user->name, 'role' => $user->getRoleNames(), 'token' => $token]], 200);
         }
     }
 
@@ -39,6 +39,6 @@ class AuthController extends Controller
     {
         // delete all tokens associated to the authenticated user(logout from all sessions)
         Auth::user()->tokens()->delete();
-        return response(null,205);
+        return response(null, 205);
     }
 }
