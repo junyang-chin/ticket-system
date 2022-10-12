@@ -9,6 +9,11 @@ class TicketPriority extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'priority',
+        'name'
+    ];
+
     protected $hidden = [
         'created_at', 'updated_at'
     ];

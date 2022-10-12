@@ -16,6 +16,7 @@ class CreateTicketPrioritiesTable extends Migration
         Schema::create('ticket_priorities', function (Blueprint $table) {
             $table->id();
             $table->string('priority');
+            $table->string('name');
             $table->timestamps();
         });
     }

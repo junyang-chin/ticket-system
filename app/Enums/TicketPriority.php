@@ -11,11 +11,15 @@ use MyCLabs\Enum\Enum;
  */
 final class TicketPriority extends Enum
 {
-    private const HIGH = 'high';
-    private const MID = 'mid';
-    private const LOW = 'low';
+    private const LOW = 'Low';
+    private const MID = 'Mid';
+    private const HIGH = 'High';
 
-    public static $priorities = [self::HIGH, self::MID, self::LOW];
+    public static $priorities = [
+        'low' => self::LOW,
+        'mid' => self::MID,
+        'high' => self::HIGH,
+    ];
     /**
      * return a random constant
      */

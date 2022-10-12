@@ -17,8 +17,8 @@ class TicketPrioritySeeder extends Seeder
     public function run()
     {
         //
-        foreach (EnumsTicketPriority::$priorities as $priority) {
-            TicketPriority::create(['priority' => $priority]);
+        foreach (EnumsTicketPriority::$priorities as $key => $name) {
+            TicketPriority::create(['priority' => $key, 'name' => $name],);
         }
     }
 }
