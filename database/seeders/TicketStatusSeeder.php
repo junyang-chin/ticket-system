@@ -17,8 +17,8 @@ class TicketStatusSeeder extends Seeder
     public function run()
     {
         //
-        foreach (EnumsTicketStatus::$statuses as $status) {
-            TicketStatus::create(['status' => $status]);
+        foreach (EnumsTicketStatus::$statuses as $status => $name) {
+            TicketStatus::create(['status' => $status, 'name' => $name]);
         }
     }
 }

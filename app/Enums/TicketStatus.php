@@ -11,11 +11,11 @@ use MyCLabs\Enum\Enum;
  */
 final class TicketStatus extends Enum
 {
-    private const IN_PROGRESS = 'in_progress';
-    private const BACKLOG = 'backlog';
-    private const COMPLETED = 'completed';
+    private const BACKLOG = 'Backlog';
+    private const IN_PROGRESS = 'In Progress';
+    private const COMPLETED = 'Completed';
 
-    public static $statuses = [self::IN_PROGRESS, self::BACKLOG, self::COMPLETED];
+    public static $statuses = ['backlog' => self::BACKLOG, 'in_progress' => self::IN_PROGRESS, 'completed' => self::COMPLETED];
 
     /**
      * return a random constant

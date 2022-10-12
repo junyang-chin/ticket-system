@@ -15,7 +15,8 @@ class CreateTicketStatusesTable extends Migration
     {
         Schema::create('ticket_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
+            $table->string('status')->unique();
+            $table->string('name');
             $table->timestamps();
         });
     }

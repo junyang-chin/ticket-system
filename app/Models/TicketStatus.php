@@ -10,7 +10,7 @@ class TicketStatus extends Model
     use HasFactory;
 
 
-    protected $fillable = ['status'];
+    protected $fillable = ['status', 'name'];
 
     protected $hidden = [
         'created_at', 'updated_at'
