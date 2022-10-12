@@ -16,14 +16,13 @@ class CategorySeeder extends Seeder
     {
         //
         $categories = [
-            ['name' => 'adnexio'],
-            ['name' => 'meniaga'],
-            ['name' => 'decoris'],
+            'adnexio' => 'Adnexio',
+            'meniaga' => 'Meniaga',
+            'decoris' => 'Decoris',
         ];
 
-        foreach ($categories as $category) {
-            extract($category);
-            Category::create(['name' => $name]);
+        foreach ($categories as $category => $name) {
+            Category::create(['category' => $category, 'name' => $name]);
         }
     }
 }
