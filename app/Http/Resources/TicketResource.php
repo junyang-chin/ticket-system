@@ -22,10 +22,12 @@ class TicketResource extends JsonResource
             'category' => $this->category->name,
             'title' => $this->title,
             'description' => $this->description,
-            'status' => $this->ticketStatus->status,
-            'priority'=> $this->ticketPriority->priority,
-            'user' => $this->user->name,
+            'status' => $this->ticketStatus->name,
+            'priority' => $this->ticketPriority->name,
+            'poster' => $this->user->name,
             'comment' => $this->comment,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

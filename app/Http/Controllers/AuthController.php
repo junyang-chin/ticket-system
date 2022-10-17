@@ -27,6 +27,8 @@ class AuthController extends Controller
             // generate token
             $token = $user->createToken('ApiToken')->plainTextToken;
             return response()->json(['data' => ['name' => $user->name, 'role' => $user->getRoleNames(), 'token' => $token]], 200);
+        } else {
+            abort(401, 'Wrong email/password. Please try again');
         }
     }
 
