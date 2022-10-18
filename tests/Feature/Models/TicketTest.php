@@ -134,7 +134,7 @@ class TicketTest extends TestCase
             ->assertJsonCount(2, "data")
             ->assertJson([
                 "data" => [["ticket_id" => $ticketA->id]],
-            ]);
+            ])->assertJsonCount(2, 'data');
     }
     public function test_users_can_search_by_title_and_category()
     {
@@ -154,7 +154,7 @@ class TicketTest extends TestCase
             "search_category" => $ticketB->category->name,
         ])->assertJson([
             "data" => [["ticket_id" => $ticketB->id]],
-        ]);
+        ])->assertJsonCount(2, 'data');
     }
     public function test_users_can_search_by_status_and_category()
     {
@@ -176,6 +176,6 @@ class TicketTest extends TestCase
             "search_category" => $ticketB->category->name,
         ])->assertJson([
             "data" => [["ticket_id" => $ticketB->id]],
-        ]);
+        ])->assertJsonCount(2, 'data');
     }
 }

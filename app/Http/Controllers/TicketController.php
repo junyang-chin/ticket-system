@@ -130,7 +130,7 @@ class TicketController extends Controller
                 //  find by relation 1-1
                 $q->whereHas('category', function ($q) use ($request) {
                     // find by category name
-                    $q->where('name', $request->search_category);
+                    $q->where('category', $request->search_category);
                 });
             })
             ->when($request->ticket_priority, function ($q) use ($request) {
