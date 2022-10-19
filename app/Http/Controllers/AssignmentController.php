@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\AssignmentResource;
 use App\Http\Resources\TicketResource;
+use App\Http\Resources\UserResource;
 use App\Http\Services\AssignmentService;
 use App\Models\Assignment;
 use App\Models\Ticket;
@@ -32,7 +33,7 @@ class AssignmentController extends Controller
     {
         //
         $collection = $this->assignmentService->getDevelopers($ticket_id);
-        return AssignmentResource::collection($collection);
+        return UserResource::collection($collection);
     }
 
     /**
