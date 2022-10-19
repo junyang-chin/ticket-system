@@ -8,7 +8,9 @@ use App\Http\Resources\UserResource;
 use App\Http\Services\AssignmentService;
 use App\Models\Assignment;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AssignmentController extends Controller
 {
@@ -104,5 +106,11 @@ class AssignmentController extends Controller
         //
         $collection = $this->assignmentService->removeDeveloper($ticket_id, $assignment->developer_id);
         return AssignmentResource::collection($collection);
+    }
+
+    public function find()
+    {
+        // dd(User::find(1)->assignments);
+        return TicketResource::collection(Auth::user()->assignments);
     }
 }

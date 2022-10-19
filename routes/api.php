@@ -48,7 +48,9 @@ Route::middleware(["auth:sanctum"])->group(function () {
         'assignment' => 'developer_id'
     ]);
 
-
+    // user assignments
+    Route::get('assignments', [AssignmentController::class, 'find']);
+    
     // category list
     Route::get('category', function () {
         return JsonResource::collection(Category::all());
