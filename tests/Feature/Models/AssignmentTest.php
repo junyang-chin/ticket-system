@@ -91,4 +91,9 @@ class AssignmentTest extends TestCase
         // dump($this->developerA->id);
         $this->deleteJson('api/tickets/' . $this->ticketA->id . '/assignments/' . $this->developerA->id)->assertJsonCount(1, 'data');
     }
+
+    // public function test_user_can_see_assigned_ticket()
+    // {
+    //     # code...
+    // }
 }

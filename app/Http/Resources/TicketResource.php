@@ -20,10 +20,13 @@ class TicketResource extends JsonResource
         return [
             'ticket_id' => $this->id,
             'category' => $this->category->name,
+            'category_id' => $this->category->id,
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->ticketStatus->name,
+            'status_id' => $this->ticketStatus->id,
             'priority' => $this->ticketPriority->name,
+            'priority_id' => $this->ticketPriority->id,
             'poster' => $this->user->name,
             'comment' => $this->comment,
             'created_at' => $this->created_at,

@@ -15,6 +15,18 @@ class TicketController extends Controller
     {
         $this->authorizeResource(Ticket::class, 'ticket'); // apply the resource policy to the resource controller then to the model
     }
+
+
+
+    public function all()
+    {
+        if (Auth::user()->hasRole('admin')) {
+            return TicketResource::collection(Ticket::all());
+        }
+
+        abort(403, 'No permission');
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -37,7 +37,7 @@ Route::post("/logout-user", [AuthController::class, "logout"])->middleware(
  */
 Route::middleware(["auth:sanctum"])->group(function () {
     // user
-    //TODO separte store
+    //TODO separate store
     Route::apiResources([
         "user" => UserController::class,
         "ticket" => TicketController::class,
@@ -67,6 +67,11 @@ Route::middleware(["auth:sanctum"])->group(function () {
 
     // search ticket
     Route::post("ticket/search", [TicketController::class, "search"]);
+
+    // all ticket
+    Route::get("all-tickets", [TicketController::class, "all"]);
+
+
 
     // search developer
     Route::post("developer/search", [UserController::class, "search"]);

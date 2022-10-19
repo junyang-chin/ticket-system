@@ -115,11 +115,7 @@ class UserController extends Controller
     public function search(Request $request) //validate request
     {
 
-
-        // $developers = DB::table('users')->where('name', 'like', "%$request->search_developer_name%")
-        // ->where(function ($q)
-        // {
-        //     $q->select()
-        // })
+        $developers = User::where('name', 'like', "%$request->search_developer_name%")->get();
+        return UserResource::collection($developers);
     }
 }

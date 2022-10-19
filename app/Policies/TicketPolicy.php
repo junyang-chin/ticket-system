@@ -22,6 +22,9 @@ class TicketPolicy
     public function viewAny(User $user)
     {
         //
+        if ($user->hasRole('admin')) {
+            return true;
+        }
         return Auth::id() === $user->id;
     }
 
@@ -35,6 +38,9 @@ class TicketPolicy
     public function view(User $user, Ticket $ticket)
     {
         //
+        if ($user->hasRole('admin')) {
+            return true;
+        }
         return $user->id === $ticket->user_id;
     }
 
@@ -47,6 +53,9 @@ class TicketPolicy
     public function create(User $user)
     {
         //
+        if ($user->hasRole('admin')) {
+            return true;
+        }
         return Auth::user()->id === $user->id;
     }
 
@@ -60,6 +69,9 @@ class TicketPolicy
     public function update(User $user, Ticket $ticket)
     {
         //
+        if ($user->hasRole('admin')) {
+            return true;
+        }
         return $user->id === $ticket->user_id;
     }
 
@@ -73,6 +85,9 @@ class TicketPolicy
     public function delete(User $user, Ticket $ticket)
     {
         //
+        if ($user->hasRole('admin')) {
+            return true;
+        }
         return $user->id === $ticket->user_id;
     }
 
