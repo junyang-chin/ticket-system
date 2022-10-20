@@ -50,20 +50,20 @@ Route::middleware(["auth:sanctum"])->group(function () {
 
     // user assignments
     Route::get('assignments', [AssignmentController::class, 'find']);
-    
+
     // category list
     Route::get('category', function () {
-        return JsonResource::collection(Category::all());
+        return ['data' => Category::all()];
     });
 
     // status list
     Route::get("ticket-status", function () {
-        return JsonResource::collection(TicketStatus::all());
+        return ['data' => TicketStatus::all()];
     });
 
     // priority list
     Route::get("ticket-priority", function () {
-        return JsonResource::collection(TicketPriority::all());
+        return ['data' => TicketPriority::all()];
     });
 
 
